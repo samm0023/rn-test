@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {createContext, useReducer} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from '../api/api';
 import {post} from '../types/post';
@@ -10,12 +11,33 @@ export interface IAction {
   payload: article[];
 }
 
+export interface IKeyApi {
+  key: string;
+  value: string;
+}
+
 let initialState: article[];
-initialState = [];
-const Context = createContext<{
+
+interface InitialContext {
   state: article[];
   GetInfo: Function;
-}>({state: initialState, GetInfo: () => null});
+}
+initialState = [];
+const Context = createContext<InitialContext>({
+  state: initialState,
+  GetInfo: () => null,
+});
+
+const storeData = async (key: IKeyApi) => {
+  try {
+    const obj = JSON.stringify(key);
+    await AsyncStorage.setItem('X-Api-Key', obj);
+  } catch (e) {
+    // saving error
+  }
+};
+
+storeData({key: 'X-Api-Key', value: '2a2bd21377bd4cb1a3657052986ebc91'});
 
 const DataReducer = (state: article[], action: IAction): article[] => {
   switch (action.type) {
@@ -26,13 +48,11 @@ const DataReducer = (state: article[], action: IAction): article[] => {
   }
 };
 
-const Provider: React.FC = ({children}): any => {
+const Provider: React.FC = ({children}): React.ReactElement => {
   const [state, dispatch] = useReducer(DataReducer, initialState);
 
   const GetInfo = async () => {
-    const data = await axios.get<post>(
-      '?sources=usa-today&apiKey=2a2bd21377bd4cb1a3657052986ebc91',
-    );
+    const data = await axios.get<post>('?sources=usa-today');
 
     if (data) {
       dispatch({type: 'get-data', payload: data.data.articles});
