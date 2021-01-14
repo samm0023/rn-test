@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {createContext, useReducer} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+const {source} = require('../api/config.json');
 
 import axios from '../api/api';
 import {post} from '../types/post';
@@ -52,7 +53,7 @@ const Provider: React.FC = ({children}): React.ReactElement => {
   const [state, dispatch] = useReducer(DataReducer, initialState);
 
   const GetInfo = async () => {
-    const data = await axios.get<post>('?sources=usa-today');
+    const data = await axios.get<post>(`?sources=${source}`);
 
     if (data) {
       dispatch({type: 'get-data', payload: data.data.articles});

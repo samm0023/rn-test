@@ -1,3 +1,4 @@
 {
-    "url":"https://newsapi.org/v2/top-headlines"
+    "url":"https://newsapi.org/v2/top-headlines",
+    "source":"usa-today"
 }
