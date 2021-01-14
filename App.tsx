@@ -14,7 +14,7 @@ const App = (): React.ReactElement => {
   return (
     <ApiProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
             name="Home"
             options={{
