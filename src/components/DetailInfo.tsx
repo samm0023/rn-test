@@ -1,9 +1,16 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Text, ListItem, Avatar} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {article} from '../types/article';
 
-const DetailInfo = ({item, id}) => {
+interface Iprops {
+  article: article;
+  id: string;
+}
+
+const DetailInfo = (prop: Iprops): JSX.Element => {
+  let {article, id} = prop;
   let d = new Date();
   return (
     <ListItem key={id} bottomDivider>
@@ -11,7 +18,7 @@ const DetailInfo = ({item, id}) => {
         <View>
           <Text style={{color: '#DBDBDB'}}>BASE ON YOUR READING HISTORY</Text>
           <Text h4 style={{paddingBottom: 15}}>
-            {item.title}
+            {article.title}
           </Text>
           <Text style={{fontSize: 12}}>Santo Antonio Mota Matos,SD</Text>
           <View>
@@ -22,7 +29,7 @@ const DetailInfo = ({item, id}) => {
           </View>
         </View>
       </ListItem.Content>
-      <Avatar source={{uri: item.urlToImage}} size={70} />
+      <Avatar source={{uri: article.urlToImage}} size={70} />
     </ListItem>
   );
 };

@@ -1,19 +1,27 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Card, Text} from 'react-native-elements';
+import {article} from '../types/article';
 
-const ItemCar = ({item}) => {
+interface Iprops {
+  article: article;
+  navigation: any;
+}
+
+const ItemCar = (props: Iprops): JSX.Element => {
+  // eslint-disable-next-line no-shadow
+  let {article} = props;
   let d = new Date();
   return (
     <>
       <Card containerStyle={style.mainStyle}>
         <Card.Image
-          source={{uri: item.urlToImage}}
+          source={{uri: article.urlToImage}}
           style={style.cardImageStyle}
         />
         <View style={style.footerStyle}>
           <Text style={style.titleContent} h4>
-            {item.title}
+            {article.title}
           </Text>
           <Text style={{fontSize: 12}}>Santo Antonio Mota Matos,SD</Text>
           <Text style={{color: '#DBDBDB', fontSize: 9}}>
